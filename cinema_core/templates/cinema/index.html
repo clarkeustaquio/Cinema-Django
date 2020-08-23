@@ -112,14 +112,14 @@
                                                 {% endfor %}
                                             
                                                 {% if movie in like_movie %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-1 mr-2"></i></a>
                                                 {% else %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-1 mr-2"></i></a>
                                                 {% endif %}
                                                 {% if movie in dislike_movie %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-1"></i></a>
                                                     {% else %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-1"></i></a>
                                                 {% endif %}
                                           
                                             </p>
@@ -173,14 +173,14 @@
                                                 {% endfor %}
                                           
                                                 {% if movie in like_movie %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-1 mr-2"></i></a>
                                                 {% else %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-1 mr-2"></i></a>
                                                 {% endif %}
                                                 {% if movie in dislike_movie %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-1"></i></a>
                                                     {% else %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-1"></i></a>
                                                 {% endif %}
                                                
                                             </p>     
@@ -210,7 +210,7 @@
                     </div>                  
                     <!-- End -->
                 {% empty %}
-                    <div class="alert alert-info" role="alert">
+                    <div class="alert alert-warning" role="alert">
                         No available movies at the moment.
                     </div>
                 {% endfor %}
@@ -276,14 +276,14 @@
                                                 {% endfor %}
                                             
                                                 {% if movie in like_movie %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-1 mr-2"></i></a>
                                                 {% else %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-1 mr-2"></i></a>
                                                 {% endif %}
                                                 {% if movie in dislike_movie %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-1"></i></a>
                                                     {% else %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-1"></i></a>
                                                 {% endif %}
                                           
                                             </p>
@@ -337,14 +337,14 @@
                                                 {% endfor %}
                                           
                                                 {% if movie in like_movie %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-1 mr-2"></i></a>
                                                 {% else %}
-                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-1 mr-2"></i></a>
                                                 {% endif %}
                                                 {% if movie in dislike_movie %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-1"></i></a>
                                                     {% else %}
-                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-1"></i></a>
                                                 {% endif %}
                                                
                                             </p>     
@@ -374,7 +374,7 @@
                     </div>                  
                     <!-- End -->
                 {% empty %}
-                <div class="alert alert-info" role="alert">
+                <div class="alert alert-warning" role="alert">
                     No available movies at the moment.
                 </div>
                 {% endfor %}

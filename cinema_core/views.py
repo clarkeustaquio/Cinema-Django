@@ -119,6 +119,10 @@ def _calculate_like():
             like_dict["{}".format(movie)] = len(Like.objects.filter(movie=movie.id))
             dislike_dict["{}".format(movie)] = len(Dislike.objects.filter(movie=movie.id))
 
+        if movie.start_date > current_date:
+            like_dict["{}".format(movie)] = len(Like.objects.filter(movie=movie.id))
+            dislike_dict["{}".format(movie)] = len(Dislike.objects.filter(movie=movie.id))
+
     for like_key, like_val in like_dict.items():
         for dislike_key, dislike_val in dislike_dict.items():
             if like_key == dislike_key:
