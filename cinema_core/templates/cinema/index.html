@@ -1,0 +1,453 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Cinema{% endblock title %}
+{% block script %}
+    <script src="{% static 'script/footer.js' %}"></script>
+    <script src="{% static 'script/coming_soon.js' %}"></script>
+{% endblock script %}
+{% block style %}
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jumbotron.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/swiper.css' %}">
+{% endblock style %}
+
+{% block content %}
+    <!-- Jumbotron -->
+    <div class="container-fluid">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="row">
+                <div id="jumbotron_col_1" class="col-6 pl-5">
+                    <div class="container h-100 w-100 mt-5 pt-5 ml-5 pl-5">
+                        <div class="ml-5">
+                            <h1 id="hero_text" class="display-4 lead text-white">WHAT'S ON TODAY</h1>
+                            <p class="lead text-white ml-5"><i>AT CINEMA AND THEATERS!</i></p>
+                            <div class="ml-5">
+                                <p class="lead text-white ml-5">Reserve your seats now. </p>
+                                <div class="ml-5">
+                                    <div class="ml-5">
+                                        <a href="{% url 'cinema:book_ticket' %}" type="button" class="btn btn-primary ml-5">BOOK TICKET</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="jumbotron_col_2" class="col-6">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {% for movie in movies %}
+                                <div class="swiper-slide" style="background-image:url('{{ movie.movie_banner.url }}')"></div>
+                            {% endfor %}
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End -->
+
+    <!-- Container after Jumbotron -->
+    <div class="container h-100s">
+        <section id="movieSection">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent">
+                <li id="now_showing_section" class="breadcrumb-item h4"><a class="" style="text-decoration: none" href="#">Now Showing</a></li>
+                <li id="coming_soon_section" class="breadcrumb-item h4"><a class="text-muted" style="text-decoration: none" href="#">Coming Soon</a></li>
+                </ol>
+            </nav>
+        </section>
+
+        <!-- Carousel -->
+        <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for movie in movies %}
+                    {% if forloop.counter0 == 0 %}
+                        <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+                    {% else %}
+                        <li data-target="#carouselIndicators" data-slide-to="{{ forloop.counter0 }}"></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for movie in movies %}
+                    {% if forloop.counter0 == 0 %}
+                        <div class="carousel-item active">
+                            <div class="card mb-5 shadow p-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="card-img" src="{{ movie.movie_banner.url }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div id="like_manager" class="card-body">
+                                            <h3 class="card-title">{{ movie.movie_title }}</h3>
+                                            <p class="card-text"><b>Genre: 
+                                                {% for genre in movie.movie_genre.all %}
+                                                    {% if movie.movie_genre.all|length > 1 %}
+                                                        {% if forloop.counter == movie.movie_genre.all|length %}
+                                                            {{genre}}
+                                                        {% else %}
+                                                            {{genre}} / 
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{genre}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </b></p>
+                                            <p class="card-text"><b>Run Time: {{ movie.movie_length }}</b></p>
+                                            <p class="card-text text-muted">
+                                                
+                                                {% for movie_, total in total_dict.items %}
+                                                    {% if movie_ == movie.movie_title %}
+                                                        {% if total != 0%}
+                                                            {{total}}% Liked this film.
+                                                        {% else %}
+                                                            No one likes yet.
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            
+                                                {% if movie in like_movie %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                {% else %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                {% endif %}
+                                                {% if movie in dislike_movie %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    {% else %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                {% endif %}
+                                          
+                                            </p>
+                         
+                                            <p class="card-text"><b>Directors:</b> {{movie.directors}}</p>
+                                            <p class="card-text"><b>Screenplay:</b> {{movie.screen_play}}</p>
+                                            <p class="text-justify">{{ movie.movie_description }}</p>
+                                        </div>
+
+                                        <a class="btn btn-primary ml-3 mb-5" href="{% url 'cinema:buy_ticket' movie.slug %}">Buy Tickets</a>
+                                        <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#{{movie.slug}}">View Trailer</button>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="carousel-item">
+                            <div class="card mb-5 shadow p-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="card-img" src="{{ movie.movie_banner.url }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div id="like_manager" class="card-body">
+                                            <h3 class="card-title">{{ movie.movie_title }}</h3>
+                                            <p class="card-text"><b>Genre: 
+                                                {% for genre in movie.movie_genre.all %}
+                                                    {% if movie.movie_genre.all|length > 1 %}
+                                                        {% if forloop.counter == movie.movie_genre.all|length %}
+                                                            {{genre}}
+                                                        {% else %}
+                                                            {{genre}} / 
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{genre}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </b></p>
+                                            <p class="card-text"><b>Run Time: {{ movie.movie_length }}</b></p>
+                                            <p class="card-text text-muted">
+                                                
+                                                {% for movie_, total in total_dict.items %}
+                                                    {% if movie_ == movie.movie_title %}
+                                                        {% if total != 0%}
+                                                            {{total}}% Liked this film.
+                                                        {% else %}
+                                                            No one likes yet.
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                          
+                                                {% if movie in like_movie %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                {% else %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                {% endif %}
+                                                {% if movie in dislike_movie %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    {% else %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                {% endif %}
+                                               
+                                            </p>     
+                                                           
+                                            <p class="card-text"><b>Directors:</b> {{movie.directors}}</p>
+                                            <p class="card-text"><b>Screenplay:</b> {{movie.screen_play}}</p>
+                                            <p class="text-justify">{{ movie.movie_description }}</p>
+                                        </div>
+                                        <a class="btn btn-primary ml-3 mb-5" href="{% url 'cinema:buy_ticket' movie.slug %}">Buy Tickets</a>
+                                        <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#{{movie.slug}}">View Trailer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{movie.slug}}" tabindex="-1" role="dialog" aria-labelledby="viewTrailerLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content bg-transparent border-0">
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="{{ movie.movie_link }}" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+                    <!-- End -->
+                {% empty %}
+                    <div class="alert alert-info" role="alert">
+                        No available movies at the moment.
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    <!-- End of Carousel -->
+
+    <!-- Coming Soon Carousel -->
+    <div id="comingSoonIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for movie in coming_soon %}
+                    {% if forloop.counter0 == 0 %}
+                        <li data-target="#comingSoonIndicators" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+                    {% else %}
+                        <li data-target="#comingSoonIndicators" data-slide-to="{{ forloop.counter0 }}"></li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for movie in coming_soon %}
+                    {% if forloop.counter0 == 0 %}
+                        <div class="carousel-item active">
+                            <div class="card mb-5 shadow p-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="card-img" src="{{ movie.movie_banner.url }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div id="like_manager" class="card-body">
+                                            <h3 class="card-title">{{ movie.movie_title }}</h3>
+                                            <p class="card-text"><b>Genre: 
+                                                {% for genre in movie.movie_genre.all %}
+                                                    {% if movie.movie_genre.all|length > 1 %}
+                                                        {% if forloop.counter == movie.movie_genre.all|length %}
+                                                            {{genre}}
+                                                        {% else %}
+                                                            {{genre}} / 
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{genre}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </b></p>
+                                            <p class="card-text"><b>Run Time: {{ movie.movie_length }}</b></p>
+                                            <p class="card-text text-muted">
+                                                
+                                                {% for movie_, total in total_dict.items %}
+                                                    {% if movie_ == movie.movie_title %}
+                                                        {% if total != 0%}
+                                                            {{total}}% Liked this film.
+                                                        {% else %}
+                                                            No one likes yet.
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            
+                                                {% if movie in like_movie %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                {% else %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                {% endif %}
+                                                {% if movie in dislike_movie %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    {% else %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                {% endif %}
+                                          
+                                            </p>
+                         
+                                            <p class="card-text"><b>Directors:</b> {{movie.directors}}</p>
+                                            <p class="card-text"><b>Screenplay:</b> {{movie.screen_play}}</p>
+                                            <p class="text-justify">{{ movie.movie_description }}</p>
+                                        </div>
+
+                                        <a class="btn btn-primary ml-3 mb-5 disabled" href="">Buy Tickets</a>
+                                        <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#{{movie.slug}}">View Trailer</button>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="carousel-item">
+                            <div class="card mb-5 shadow p-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="card-img" src="{{ movie.movie_banner.url }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div id="like_manager" class="card-body">
+                                            <h3 class="card-title">{{ movie.movie_title }}</h3>
+                                            <p class="card-text"><b>Genre: 
+                                                {% for genre in movie.movie_genre.all %}
+                                                    {% if movie.movie_genre.all|length > 1 %}
+                                                        {% if forloop.counter == movie.movie_genre.all|length %}
+                                                            {{genre}}
+                                                        {% else %}
+                                                            {{genre}} / 
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{genre}}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </b></p>
+                                            <p class="card-text"><b>Run Time: {{ movie.movie_length }}</b></p>
+                                            <p class="card-text text-muted">
+                                                
+                                                {% for movie_, total in total_dict.items %}
+                                                    {% if movie_ == movie.movie_title %}
+                                                        {% if total != 0%}
+                                                            {{total}}% Liked this film.
+                                                        {% else %}
+                                                            No one likes yet.
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                          
+                                                {% if movie in like_movie %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                                                {% else %}
+                                                    <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                                                {% endif %}
+                                                {% if movie in dislike_movie %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                                    {% else %}
+                                                    <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                                                {% endif %}
+                                               
+                                            </p>     
+                                                           
+                                            <p class="card-text"><b>Directors:</b> {{movie.directors}}</p>
+                                            <p class="card-text"><b>Screenplay:</b> {{movie.screen_play}}</p>
+                                            <p class="text-justify">{{ movie.movie_description }}</p>
+                                        </div>
+                                        <a class="btn btn-primary ml-3 mb-5 disabled" href="">Buy Tickets</a>
+                                        <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#{{movie.slug}}">View Trailer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="{{movie.slug}}" tabindex="-1" role="dialog" aria-labelledby="viewTrailerLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content bg-transparent border-0">
+                                <div class="modal-body">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="{{ movie.movie_link }}" allowfullscreen></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+                    <!-- End -->
+                {% empty %}
+                <div class="alert alert-info" role="alert">
+                    No available movies at the moment.
+                </div>
+                {% endfor %}
+            </div>
+
+            <a class="carousel-control-prev" href="#comingSoonIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#comingSoonIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    <!--  End of Coming Soon-->
+    </div>
+    <!-- Ennd of Container -->
+
+    <!-- TOP MOVIES -->
+    <div class="container">
+        <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Top Movies</h1>
+            <p class="lead">Trending movies on the CINEMA!</p>
+            <p class="lead">Prepare yourself for the most suspense-filled movies.</p>
+            <p class="lead">Grab your tickets now.</p>
+        </div>
+
+        <div class="card-deck mb-3 text-center">
+            {% for top_movie in top_movies %}
+                {% if forloop.counter0 < 3%}
+                    {% for movie in movies %}
+                        {% if top_movie == movie.movie_title %}
+                            <div class="card mb-4 shadow-sm">
+                                <div class="card-header">
+                                    <h4 class="my-0 font-weight-normal">{{ movie.movie_title }}</h4>
+                                </div>
+                                <div class="container mt-3 mb-3">
+                                    <img class="card-img" src="{{ movie.movie_banner.url }}">
+                                </div>
+                                
+                                <div class="card-footer">
+                                    <a type="button" href="{% url 'cinema:book_ticket' %}" class="btn btn-lg btn-block btn-outline-primary">Book Ticket</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom_script %}
+    <script src="{% static 'script/jumbotron.js' %}"></script>
+    <script src="{% static 'script/like_manager.js' %}"></script>
+    <script src="{% static 'script/trigger.js' %}"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+          effect: 'coverflow',
+          grabCursor: true,
+          centeredSlides: true,
+          slidesPerView: 'auto',
+          coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 150,
+            modifier: 3,
+            slideShadows: true,
+          },
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+          },
+        });
+    </script>
+{% endblock bottom_script %}

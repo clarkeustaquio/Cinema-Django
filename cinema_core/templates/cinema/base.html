@@ -1,0 +1,116 @@
+{% load bootstrap4 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title%}</title>
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navigation.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/movieSection.css' %}">
+
+    <script src="https://use.fontawesome.com/6989e1cf0d.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/xcash/bootstrap-autocomplete@v2.3.5/dist/latest/bootstrap-autocomplete.min.js"></script>
+    {% block script %}{% endblock script %}
+    {% block style %}{% endblock style %}
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+    <nav class="navbar sticky-top navbar-light bg-light navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'cinema:index' %}"><h3>Cinema</h3></a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" 
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+            </button>
+            <form method="POST" action="{% url 'cinema:search_movie' %}" class="form-inline">
+                    {% csrf_token %}
+                    <input class="form-control searchMovie mr-sm-2" type="text" name="search" placeholder="Search Movie" autocomplete="off">
+                    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Go</button>
+            </form> 
+                
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto mr-5">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="" id="navBarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">MOVIES</a>
+                    
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'cinema:redirect_now_showing' %}">Now Showing</a>
+                        <a class="dropdown-item" id="coming_soon_dropdown" href="{% url 'cinema:redirect_coming_soon' %}">Coming Soon</a>
+                    </div>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cinema:snacks' %}">SNACKS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'cinema:book_ticket' %}">BOOK TICKET</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navBarDropDownProfile" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PROFILE</a>
+                    
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownProfile">
+                                <a href="{% url 'profile:history' %}" class="dropdown-item" href="">History</a>
+                                <a class="dropdown-item" href="{% url 'profile:settings' %}">Settings</a>
+                                <a href="{% url 'account_logout' %}" class="dropdown-item" href="">Logout</a>
+                                
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item"><a href="{% url 'account_login' %}" id="btnCollapse" type="button" class="btn btn-dark" href="">SIGN IN</a></li>
+                        <li class="nav-item"><a href="{% url 'account_login' %}" id="btnShow" class="nav-link" href="">SIGN IN</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        
+    </nav>
+    <div class="wrapper flex-grow-1">
+        <main role="main">
+            {% block content %}{% endblock content %}
+        </main>
+    </div>
+    <!-- Footer -->
+    <footer class="page-footer font-small bg-dark mt-5">
+        <div class="container text-center text-md-left">
+            <div class="row mt-3">
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4 text-white mt-5">
+                    <h6 class="text-uppercase font-weight-bold">Cinema</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p>Enjoy the latest international & local films with your family & friends at Cinema!</p>
+                </div>
+
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 text-white mt-5">
+                    <h6 class="text-uppercase font-weight-bold">Contact</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p class="text-white">+63123123123</p>
+                    <p class="text-white">cinema@cinema.com</p>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 text-white mt-5">
+                    <h6 class="text-uppercase font-weight-bold">Developers</h6>
+                    <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                    <p><a class="text-white" href="{% url 'api:movie_api' %}">Movies API</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-copyright text-center py-3 bg-secondary">© 2020 Copyright:
+            <a class="text-white" href="#"> cinema.com</a>
+        </div>
+    </footer>
+    <!-- End Footer -->
+    {% block bottom_script %}{% endblock bottom_script %}
+    <script>
+        $('.searchMovie').autoComplete({
+            resolverSettings: {
+                url: '{% url "api:search_movie" %}'
+            }
+        });
+    </script>
+</body>
+</html>

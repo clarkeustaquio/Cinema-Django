@@ -1,0 +1,45 @@
+{% extends 'account/social_base.html' %}
+{% load i18n %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}{% trans "Signup" %}{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/social_icon.css' %}">
+{% endblock style %}
+{% block content %}
+    <div class="container mt-5 h-100">
+        <a href="{% url 'cinema:index' %}"><h3 class="text-muted text-monospace text-center">Cinema</h3></a>
+        <div class="row h-100 justify-content-center align-items-center">
+            <div id="card_login" class="card mt-4 shadow p-3" style="width: 30rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-4 mt-3">Create your Cinema account</h5>
+
+                    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        {% buttons %}
+                            <button class="btn btn-primary btn-block mt-5" type="submit">{% trans "Create account" %}</button>
+                        {% endbuttons%}
+                    </form>      
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center mt-3">
+            <p class="card-text text-center">Have an account? <a href="{{ login_url }}">Sign in</p>
+        </div>
+    </div>
+
+
+
+<!-- ------------ -->
+    
+{% endblock %}
+{% block bottom_script %}
+    <script src="{% static 'script/social_script.js' %}"></script>
+{% endblock bottom_script %}

@@ -1,0 +1,17 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Payment Failed{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="pb-2 pt-2 mb-2 border-bottom">
+            <h4>Payment Failed</h4>
+        </div>
+        <div class="alert alert-danger" role="alert">
+            Your transaction is failed.
+        </div>
+        <div class="alert alert-danger" role="alert">
+            Please add and review your tickets.
+        </div>
+        <a href="{% url 'cinema:book_ticket' %}" class="btn btn-primary float-right">Book Ticket</a>
+    </div>
+{% endblock content %}

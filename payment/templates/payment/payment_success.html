@@ -1,0 +1,18 @@
+{% extends 'cinema/base.html' %}
+{% block title %}Payment Successful{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="pb-2 pt-2 mb-2 border-bottom">
+            <h4>Payment Successful</h4>
+        </div>
+        <div class="alert alert-success" role="alert">
+            You successfully booked the tickets.
+        </div>
+        <div class="alert alert-success" role="alert">
+            Check your email for ticket receipts.
+        </div>
+        <a href="{% url 'cinema:book_ticket' %}" class="btn btn-primary float-right">Book Ticket</a>
+        <a href="{% url 'profile:history' %}" class="btn btn-primary float-right mr-3">Check your History</a>
+    </div>
+{% endblock content %}

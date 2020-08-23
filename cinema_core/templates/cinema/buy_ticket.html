@@ -1,0 +1,112 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% block title %}Buy Ticket{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/buy_ticket_jumbotron.css' %}">
+{% endblock style %}
+{% block script %}
+    <script src="{% static 'script/buy_ticket.js' %}"></script>
+{% endblock script %}
+{% block content %}
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid"></div>
+        <div class="row">
+            <div class="col">
+                <div class="row">
+                    <img id="image_banner" src="{{ movie.movie_banner.url }}" class="w-25 ml-5" style="margin-top: -10%">
+                    <div id="like_manager" class="ml-4">
+                        <h3 class="card-title">{{ movie.movie_title }}</h3>
+                        <p class="card-text"><b>Genre: 
+                            {% for genre in movie.movie_genre.all %}
+                                {% if movie.movie_genre.all|length > 1 %}
+                                    {% if forloop.counter == movie.movie_genre.all|length %}
+                                        {{genre}}
+                                    {% else %}
+                                        {{genre}} / 
+                                    {% endif %}
+                                {% else %}
+                                    {{genre}}
+                                {% endif %}
+                            {% endfor %}
+                        </b></p>
+                        <p class="card-text"><b>Run Time: {{ movie.movie_length }}</b></p>                 
+                        <p class="card-text"><b>Directors:</b> {{movie.directors}}</p>
+                        <p class="card-text text-muted">
+                            {% for movie_, total in total_dict.items %}
+                                {% if movie_ == movie.movie_title %}
+                                    {% if total != 0%}
+                                        {{total}}% Liked this film.
+                                    {% else %}
+                                        No one likes yet.
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                           
+                            {% if movie in like_movie %}
+                                <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-primary ml-3 mr-3"></i></a>
+                            {% else %}
+                                <a id="like" data-manager="{{movie.slug}}" href="{% url 'manager:like' movie.slug %}"><i data-like="{{movie.slug}}" class="fa fa-thumbs-up fa-2x text-dark ml-3 mr-3"></i></a>
+                            {% endif %}
+                            {% if movie in dislike_movie %}
+                                <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-primary mr-5"></i></a>
+                                {% else %}
+                                <a id="dislike" data-manager="{{movie.slug}}" href="{% url 'manager:dislike' movie.slug %}"><i data-dislike="{{movie.slug}}" class="fa fa-thumbs-down fa-2x text-dark mr-5"></i></a>
+                            {% endif %}
+     
+                        </p>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{movie.slug}}">Play Trailer</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="{{movie.slug}}" tabindex="-1" role="dialog" aria-labelledby="viewTrailerLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content bg-transparent border-0">
+                        <div class="modal-body">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="{{ movie.movie_link }}" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                  
+            <!-- End -->
+        </div>
+        <hr>
+        <div id="container_form" class="container mt-3 ml-3 mb-5">
+            <p class="card-text"><b>Screenplay:</b> {{movie.screen_play}}</p>
+            <p class="text-justify">{{ movie.movie_description }}</p>
+
+            <form method="POST" action="{% url 'cinema:ticket_view' movie.slug %}">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="float-left mt-2 mb-n2"><h5>Price: ₱{{ movie.movie_price }}</h5></label>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select class="custom-select" name="theater_time">
+                            {% for theater_time in theater_times %}
+                                <option value="{{ theater_time }}">{{ theater_time }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <select class="custom-select" name="theater_date">
+                            {% for day_span in day_spans %}
+                                <option value="{{ day_span }}">{{ day_span }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    {% buttons %}
+                        <button class="btn btn-primary" name="submit">View Seats</button>
+                    {% endbuttons %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom_script %}
+    <script src="{% static 'script/like_manager.js' %}"></script>
+{% endblock bottom_script %}

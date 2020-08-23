@@ -1,0 +1,15 @@
+#btnShow{
+    display: none;
+}
+
+@media only screen and (max-width: 992px){
+    .form-inline{
+        display: none;
+    }
+    #btnCollapse{
+        display: none;
+    }
+    #btnShow{
+        display: block;
+    }
+}

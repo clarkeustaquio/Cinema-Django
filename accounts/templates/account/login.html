@@ -1,0 +1,73 @@
+{% extends 'account/social_base.html' %}
+{% load i18n %}
+{% load static %}
+{% load bootstrap4 %}
+{% load socialaccount %}
+{% load account socialaccount %}
+
+{% block title %}{% trans "Sign In" %}{% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/social_icon.css' %}">
+{% endblock style %}
+
+{% block content %}
+    
+    {% get_providers as socialaccount_providers %}
+    <div class="container mt-5 h-100">
+        <a href="{% url 'cinema:index' %}"><h3 class="text-muted text-monospace text-center">Cinema</h3></a>
+        <div class="row h-100 justify-content-center align-items-center">
+            <div id="card_login" class="card mt-4 shadow p-3" style="width: 30rem;">
+                <div class="card-body">
+                    <h5 class="card-title mb-4 mt-3">Sign in to your account</h5>
+
+                    <form class="login" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <a class="button secondaryAction float-right mt-n5"  href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+
+                        {% buttons %}
+                            <button class="btn btn-primary btn-block" type="submit">{% trans "Continue" %}</button>
+                        {% endbuttons%}
+                    </form>
+                    
+                    <p class="card-text text-muted text-center">Or</p>
+                    {% if socialaccount_providers %}
+                        <div class="container d-flex justify-content-center mb-3">
+                            <div class="row m-0 m-auto">
+                                <div class="socialaccount_ballot">
+                                    <ul class="socialaccount_providers">
+                                        <a id="google_icon" href=""><img class="img-responsive ml-n5 mr-3" src="{% static 'img/gmail_icon.ico' %}"></a>
+                                        <a id="twitter_icon" href=""><img class="img-responsive" src="{% static 'img/twitter_icon.ico' %}"></a>
+                                        
+                                        
+                                        
+                                        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                                    </ul>
+                                </div>
+                        
+                                {% include "socialaccount/snippets/login_extra.html" %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="card-text">{% blocktrans %}If you have not created an account yet, then please
+                        <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
+                    {% endif %}
+                        
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center align-items-center mt-3">
+            <p class="card-text">
+                {% blocktrans with site.name as site_name %}Don't have an account? <a href="{{ signup_url }}">Sign up</a>{% endblocktrans %}
+            </p>
+        </div>
+    </div>
+{% endblock content %}
+{% block bottom_script %}
+    <script src="{% static 'script/social_script.js' %}"></script>
+{% endblock bottom_script %}

@@ -1,0 +1,51 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% block title %}History{% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+{% endblock style %}
+{% block script %}
+
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
+{% endblock script %}
+{% block content %}
+    <div class="container">
+        <div class="pb-2 pt-2 mb-3 border-bottom">
+            <h3>History</h3>
+        </div>
+        <table id="history" class="table table-striped dt-responsive">
+            <thead class="bg-dark text-white">
+                <tr>
+                  <th scope="col">Movie</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Seat</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for history in history %}
+                    <tr>
+                        <th>{{ history.movie }}</th>
+                        <td>
+                            <p><b>{{ history.theater }}</b></p>
+                            <p>{{ history.date }}</p>
+                            <p>{{ history.time }}</p>
+                        </td>
+                        <td>{{ history.seat }}</td>
+                        <td>₱{{ history.price }}</td>
+                    </tr>
+                {% empty %}
+                    <div class="alert alert-info" role="alert">
+                        History is empty.
+                    </div>
+                {% endfor %}
+              </tbody>
+        </table>
+    </div>
+{% endblock content %}
+{% block bottom_script %}
+    <script src="{% static 'script/history.js' %}"></script>
+{% endblock bottom_script %}

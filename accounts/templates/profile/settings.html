@@ -1,0 +1,54 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Settings{% endblock title%}
+
+{% block content %}
+    <div class="container">
+        <div class="pb-2 pt-2 mb-4 mt-3 border-bottom">
+            <h3>Settings</h3>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <ul class="list-group">
+                    <a href="{% url 'account_email' %}" style="text-decoration:none">
+                        <li class="list-group-item">
+                            <div class="row mt-3 mb-2">
+                                <div class="col-sm">
+                                    <h5 class="text-dark">Email Addresses</h5>
+                                </div>
+                                <div class="col-xl">
+                                    <h5 class="text-secondary">{{ user.email}}</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 id="edit_email" class="text-primary float-right">Edit</h5>
+                                </div>
+                            </div>
+                        </li>
+                    </a>
+                    <a href="{% url 'account_change_password' %}" style="text-decoration:none">
+                        <li class="list-group-item">
+                            <div class="row mt-3 mb-2">
+                                <div class="col-sm">
+                                    <h5 class="text-dark">Password</h5>
+                                </div>
+                                <div class="col-xl">
+                                    <h5 class="text-secondary">****************</h5>
+                                </div>
+                                <div class="col">
+                                    <h5 id="edit_pass" class="text-primary float-right">Edit</h5>
+                                </div>
+                            </div>
+                        </li>
+                    </a>
+                </ul>    
+            </div>
+          </div>
+          <a href="{% url 'api:movie_api' %}" class="btn btn-primary float-right ml-2">View API</a>
+          <a href="{% url 'cinema:index' %}" class="btn btn-primary float-right">Cancel</a>
+    </div>
+{% endblock content %}
+{% block bottom_script%}
+<script src="{% static 'script/settings.js' %}"></script>
+{% endblock bottom_script %}
