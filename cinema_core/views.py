@@ -228,7 +228,7 @@ def snacks(request):
 def search_movie(request):
     if request.method == "POST":
         try:
-            movie = Movie.objects.get(movie_title__contains=request.POST['search'])
+            movie = Movie.objects.get(movie_title__icontains=request.POST['search'])
        
         except Movie.DoesNotExist:  
             return render(request, 'cinema/search.html')
