@@ -90,11 +90,12 @@ def _calculate_order(request):
 @login_required
 def _user_select(request, movie_id, seat_id):
     try:
-        seat = str(seat_id)
-        if seat not in request.session:
-            request.session[seat] = seat_id
-        else:
-            request.session.pop(seat)
+        if request.is_ajax():
+            seat = str(seat_id)
+            if seat not in request.session:
+                request.session[seat] = seat_id
+            else:
+                request.session.pop(seat)
     except KeyError:
         pass
     
