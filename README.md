@@ -10,7 +10,7 @@ And automate the creation of number of seats and schedules when instantiating a 
  - Customized class for ModelAdmin.
  - Implement security for object creation, such as correct dates, and relation with other models.
  - Implement an algorithm to embed youtube videos.
- - Automate slug fields
+ - Automated slug fields
 
 Uses django-storages for Amazon Web Service.
 Movie banners are stored in Amazon S3 Bucket.
