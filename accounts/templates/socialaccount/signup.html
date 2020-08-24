@@ -1,7 +1,7 @@
 {% extends "cinema/base.html" %}
 
 {% load i18n %}
-
+{% load bootstrap4 %}
 {% block title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
@@ -16,9 +16,9 @@
                 {% csrf_token %}
                 {{ form.as_p }}
                 {% if redirect_field_value %}
-                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    <input type="hidden" class="form-control" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                 {% endif %}
-                <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+                <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
             </form>
     </div>
 
