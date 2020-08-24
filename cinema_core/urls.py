@@ -18,10 +18,11 @@ urlpatterns = [
     path('ticket-view/<slug>/', views.ticket_view, name='ticket_view'),
     path('snacks/', views.snacks, name='snacks'),
     
-    path('user-select/{}<int:movie_id>{}?id={}<int:seat_id>{}/'.format(
-        generate_random()[1:], generate_random(),
-        generate_random(), generate_random()
-    ), views._user_select, name='user_select'),
+    path('user-select/<int:movie_id>&id=<int:seat_id>/', views._user_select, name='user-select'),
+    # path('user-select/{}<int:movie_id>{}?id={}<int:seat_id>{}/'.format(
+    #     generate_random()[1:], generate_random(),
+    #     generate_random(), generate_random()
+    # ), views._user_select, name='user_select'),
 
     path('search/', views.search_movie, name='search_movie'),
     path('redirect_now_showing/', views.redirect_now_showing, name='redirect_now_showing'),
