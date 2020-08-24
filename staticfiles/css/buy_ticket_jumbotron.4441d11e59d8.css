@@ -1,8 +1,0 @@
-.jumbotron{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/static/img/buy_ticket_jumbotron.d5b3feeb68e9.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding-top: 15%;
-    padding-bottom: 20%
-}

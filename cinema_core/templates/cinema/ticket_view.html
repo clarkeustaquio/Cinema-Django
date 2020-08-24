@@ -4,8 +4,8 @@
 
 {% block title %}Ticket View{% endblock title %}
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/ticket_view.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/list_group.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cinema_core/css/ticket_view.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cinema_core/css/list_group.css' %}">
 {% endblock style %}
 {% block content %}
     <div class="container">
@@ -150,9 +150,9 @@
                         </div>
                         <div class="card text-center mx-auto border-0">
                             <div class="card-body">
-                                <img class="img-responsive mr-3" src="{% static 'img/cinema_chair_available.png' %}" width="50" height="50">
-                                <img class="img-responsive mr-3" src="{% static 'img/cinema_chair_booked.png' %}" width="50" height="50">
-                                <img class="img-responsive mr-3" src="{% static 'img/cinema_chair_selected.png' %}" width="50" height="50">
+                                <img class="img-responsive mr-3" src="{% static 'cinema_core/img/cinema_chair_available.png' %}" width="50" height="50">
+                                <img class="img-responsive mr-3" src="{% static 'cinema_core/img/cinema_chair_booked.png' %}" width="50" height="50">
+                                <img class="img-responsive mr-3" src="{% static 'cinema_core/img/cinema_chair_selected.png' %}" width="50" height="50">
                                 <footer>
                                     <small class="mr-3"><b>Available</b></small>
                                     <small class="mr-3"><b>Booked</b></small>
@@ -166,14 +166,14 @@
                             {% for cinema_seat in cinema_seats %}
                                 {% if cinema_seat.id not in request.session.values and cinema_seat.paid %}
                                     <a class="text-decoration-none" data-seat="{{cinema_seat.id}}" href="{% url 'cinema:user_select' movies.id cinema_seat.id %}">
-                                        <img id="{{cinema_seat.id}}" class="img-responsive mr-3 mb-2" src="{% static 'img/cinema_chair_available.png' %}" width="45" height="45">
+                                        <img id="{{cinema_seat.id}}" class="img-responsive mr-3 mb-2" src="{% static 'cinema_core/img/cinema_chair_available.png' %}" width="45" height="45">
                                     </a>
                                 {% elif cinema_seat.id in request.session.values %}
                                     <a id="{{cinema_seat.id}}" data-seat="{{cinema_seat.id}}" class="text-decoration-none" href="{% url 'cinema:user_select' movies.id cinema_seat.id %}">
-                                        <img id="{{cinema_seat.id}}" class="img-responsive mr-3 mr-1 mb-2" src="{% static 'img/cinema_chair_selected.png' %}" width="45" height="45">
+                                        <img id="{{cinema_seat.id}}" class="img-responsive mr-3 mr-1 mb-2" src="{% static 'cinema_core/img/cinema_chair_selected.png' %}" width="45" height="45">
                                     </a>
                                 {% elif not cinema_seat.paid %}
-                                    <img class="img-responsive mr-3 mr-1 mb-2" src="{% static 'img/cinema_chair_booked.png' %}" width="45" height="45">
+                                    <img class="img-responsive mr-3 mr-1 mb-2" src="{% static 'cinema_core/img/cinema_chair_booked.png' %}" width="45" height="45">
                                 {% endif %}
                             {% endfor %}
                         </div>
@@ -199,8 +199,8 @@
 {% endblock content %}
 {% block bottom_script %}
     <script>
-        var image_selected = "{% static 'img/cinema_chair_selected.png' %}";
-        var image_available = "{% static 'img/cinema_chair_available.png' %}";
+        var image_selected = "{% static 'cinema_core/img/cinema_chair_selected.png' %}";
+        var image_available = "{% static 'cinema_core/img/cinema_chair_available.png' %}";
     </script>
-    <script src="{% static 'script/select_ajax.js' %}"></script>
+    <script src="{% static 'cinema_core/script/select_ajax.js' %}"></script>
 {% endblock bottom_script %}

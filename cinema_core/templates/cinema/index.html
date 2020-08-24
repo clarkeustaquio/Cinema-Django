@@ -4,15 +4,15 @@
 
 {% block title %}Cinema{% endblock title %}
 {% block script %}
-    <script src="{% static 'script/footer.js' %}"></script>
-    <script src="{% static 'script/coming_soon.js' %}"></script>
+    <script src="{% static 'cinema_core/script/footer.js' %}"></script>
+    <script src="{% static 'cinema_core/script/coming_soon.js' %}"></script>
 {% endblock script %}
 {% block style %}
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jumbotron.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cinema_core/css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cinema_core/css/jumbotron.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'cinema_core/css/swiper.css' %}">
 {% endblock style %}
 
 {% block content %}
@@ -427,9 +427,9 @@
     </div>
 {% endblock content %}
 {% block bottom_script %}
-    <script src="{% static 'script/jumbotron.js' %}"></script>
-    <script src="{% static 'script/like_manager.js' %}"></script>
-    <script src="{% static 'script/trigger.js' %}"></script>
+    <script src="{% static 'cinema_core/script/jumbotron.js' %}"></script>
+    <script src="{% static 'cinema_core/script/like_manager.js' %}"></script>
+    <script src="{% static 'cinema_core/script/trigger.js' %}"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
         var swiper = new Swiper('.swiper-container', {

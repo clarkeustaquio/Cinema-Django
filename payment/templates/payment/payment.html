@@ -3,7 +3,7 @@
 {% block title %}Payment{% endblock title %}
 
 {% block script %}
-    <script src="{% static 'script/mobile_payment.js' %}"></script>
+    <script src="{% static 'payment/script/mobile_payment.js' %}"></script>
 {% endblock script %}
 {% block content %}
     <div id="desktopView" class="container">
@@ -167,5 +167,5 @@
         var stripe = Stripe('{{ public_key }}');
         var session = '{{ session }}';
     </script>
-    <script src="{% static 'script/stripe.js' %}"></script>
+    <script src="{% static 'payment/script/stripe.js' %}"></script>
 {% endblock bottom_script %}

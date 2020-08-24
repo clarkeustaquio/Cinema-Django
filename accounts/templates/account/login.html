@@ -8,7 +8,7 @@
 {% block title %}{% trans "Sign In" %}{% endblock title %}
 
 {% block style %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/social_icon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/social_icon.css' %}">
 {% endblock style %}
 
 {% block content %}
@@ -41,8 +41,8 @@
                             <div class="row m-0 m-auto">
                                 <div class="socialaccount_ballot">
                                     <ul class="socialaccount_providers">
-                                        <a id="google_icon" href=""><img class="img-responsive ml-n5 mr-3" src="{% static 'img/gmail_icon.ico' %}"></a>
-                                        <a id="twitter_icon" href=""><img class="img-responsive" src="{% static 'img/twitter_icon.ico' %}"></a>
+                                        <a id="google_icon" href=""><img class="img-responsive ml-n5 mr-3" src="{% static 'accounts/img/gmail_icon.ico' %}"></a>
+                                        <a id="twitter_icon" href=""><img class="img-responsive" src="{% static 'accounts/img/twitter_icon.ico' %}"></a>
                                         
                                         
                                         
@@ -69,5 +69,5 @@
     </div>
 {% endblock content %}
 {% block bottom_script %}
-    <script src="{% static 'script/social_script.js' %}"></script>
+    <script src="{% static 'accounts/script/social_script.js' %}"></script>
 {% endblock bottom_script %}
