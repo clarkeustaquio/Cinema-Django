@@ -37,9 +37,11 @@ DRF is also used for the search functionality of the application.
 
 # Payment
 Implement the use of Stripe for payment method.
+
 It redirects the user to checkout section and fill the required fields for the payment.
 
 Stripe checkout is customized with additional images for better look in checkout.
+
 If payment is successful, ticket receipt is sent into user's email address.
 And logged the ticket on the user's history.
 
