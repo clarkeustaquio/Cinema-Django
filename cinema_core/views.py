@@ -107,7 +107,7 @@ def _user_select(request, movie_id, seat_id):
             'cart': len(orders['serialized']),
         }   
 
-        return JsonResponse(context, safe=False status=200, json_dumps_params={'indent': 4})
+        return JsonResponse(context, safe=False, status=200, json_dumps_params={'indent': 4})
 
 def _calculate_like():
     movies = Movie.objects.all()
