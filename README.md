@@ -43,7 +43,7 @@ It redirects the user to checkout section and fill the required fields for the p
 Stripe checkout is customized with additional images for better look in checkout.
 
 If payment is successful, ticket receipt is sent into user's email address.
-And logged the ticket on the user's history.
+And logged the ticket onto user's history.
 
 # FrontEnd
 For the design Bootstrap4 is used.
