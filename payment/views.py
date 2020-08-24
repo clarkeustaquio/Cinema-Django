@@ -74,7 +74,6 @@ def payment_success(request):
         orders = _calculate_order(request)
         subject = "Ticket Receipt"
         message = "Cinema ticket info"
-        from_email = settings.EMAIL_HOST_USER
         recipient_list = [request.user.email]
         html_message = render_to_string(
             'email/ticket_receipt.html', 
@@ -88,7 +87,7 @@ def payment_success(request):
         ticket_receipt = send_mail(
             subject=subject,
             message=message,
-            from_email=from_email,
+            from_email="clark.eustaquio@gmail.com",
             recipient_list=recipient_list,
             fail_silently=False,
             html_message=html_message
