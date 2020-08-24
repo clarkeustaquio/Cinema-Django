@@ -87,12 +87,12 @@ def payment_success(request):
             ticket_receipt = send_mail(
                 subject = subject,
                 message = message,
-                from_email = "clark.eustaquio@gmail.com",
+                from_email = settings.DEFAULT_FROM_EMAIL,
                 recipient_list = recipient_list,
                 fail_silently = True,
                 html_message = html_message
             )
-            
+
         except BadHeaderError:
             print("Error")
 
