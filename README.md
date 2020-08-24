@@ -30,7 +30,9 @@ Implementation of Celery for Asynchronous Task.
 
 # Django-Rest-Framework
 Supports for all movies that is in the database.
+
 Also allow searching movies by, api/title='movie-title'/
+
 DRF is also used for the search functionality of the application.
 
 # Payment
