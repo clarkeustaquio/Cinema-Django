@@ -7,7 +7,7 @@ from cinema_core.views import _calculate_order
 from django.contrib.auth.decorators import login_required
 from urllib.error import HTTPError
 from django.template.loader import render_to_string
-from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
 from cinema_core.models import CinemaSeat
 from accounts.models import History
 # Create your views here.
@@ -83,15 +83,18 @@ def payment_success(request):
                 'total_amount': orders['total_amount'],
             }
         )
-
-        ticket_receipt = send_mail(
-            subject=subject,
-            message=message,
-            from_email="clark.eustaquio@gmail.com",
-            recipient_list=recipient_list,
-            fail_silently=False,
-            html_message=html_message
-        )
+        try:
+            ticket_receipt = send_mail(
+                subject = subject,
+                message = message,
+                from_email = "clark.eustaquio@gmail.com",
+                recipient_list = recipient_list,
+                fail_silently = True,
+                html_message = html_message
+            )
+            
+        except BadHeaderError:
+            print("Error")
 
     for ticket in ticket_orders:
         request.session.pop(ticket)
