@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <!--  -->
-                <div class="row float-left ml-0 mt-n2">
+                <div class="row float-left ml-0 mt-n2 mr-3">
                     <button id="view_ticket_card" type="button" data-toggle="modal" data-target="#view_ticket_info" class="btn btn-light btn-block">View Ticket Info</button>
                 </div>
                 <div class="continer float-right">
@@ -151,7 +151,7 @@
                     </div>
                     <div class="row mr-3">
                         {% if total_amount %}
-                            <button id='checkout-button' data-secret="{{ session }}" class="btn btn-primary btn-block">Continue to checkout</button>
+                            <button id='checkout-button-mobile' data-secret="{{ session }}" class="btn btn-primary">Continue to checkout</button>
                         {% else %}
                             <a href="#" class="btn btn-primary disabled">Continue to checkout</a>
                         {% endif %}
