@@ -62,5 +62,5 @@ And for Liking and Disliking the movie as well.
  - Coming Soon movies are filtered if the current date is still less than, than the said date.
 
 The Web Application also supports the mobile view. But it is recommended to use in Desktop View
-for better user experience and bug less.
+for better user experience.
 
