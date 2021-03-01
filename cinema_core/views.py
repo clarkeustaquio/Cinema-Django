@@ -204,7 +204,7 @@ def ticket_view(request, slug):
         theater=movies.theater, 
         time_char_field=request.session.get('theater_time'),
         date=request.session.get('theater_date'),
-    )
+    ).order_by('id')
 
     orders = _calculate_order(request)
     context = {
